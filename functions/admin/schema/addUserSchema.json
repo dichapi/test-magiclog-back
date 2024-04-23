@@ -1,0 +1,38 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "errorMessage": "Ingrese un nombre válido"
+        },
+        "email": {
+            "type": "string",
+            "format": "email",
+            "errorMessage": "Debe ser un correo electrónico válido"
+        },
+        "password": {
+            "type": "string",
+            "minLength": 8,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+            "errorMessage": "La contraseña debe tener al menos 8 caracteres, incluyendo al menos una mayúscula, una minúscula, un número y un carácter especial."
+        },
+        "confirmPassword": {
+            "type": "string",
+            "minLength": 8,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+            "errorMessage": "La contraseña debe tener al menos 8 caracteres, incluyendo al menos una mayúscula, una minúscula, un número y un carácter especial."
+        },
+        "rol": {
+            "type": "string",
+            "enum": ["Administrador", "Vendedor", "Cliente"],
+            "errorMessage": "Debe ser 'Administrador' o 'Vendedor' o 'Cliente'"
+        }
+    },
+    "required": [
+        "name",
+        "email",
+        "password",
+        "confirmPassword",
+        "rol"
+    ]
+}

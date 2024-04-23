@@ -1,0 +1,30 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 25,
+            "errorMessage": "El nombre debe tener entre 3 y 25 caracteres"
+        },
+        "code": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9]+$",
+            "errorMessage": "Debe ser un código válido"
+        },
+        "price": {
+            "type": "number",
+            "minimum": 0
+        },
+        "count": {
+            "type": "number",
+            "minimum": 1
+        }
+    },
+    "required": [
+        "name",
+        "code",
+        "price",
+        "count"
+    ]
+}
