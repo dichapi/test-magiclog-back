@@ -10,7 +10,6 @@ const ajv = new Ajv({
 require("ajv-formats")(ajv);
 ajvErrors(ajv);
 
-// Middleware de autenticación
 async function verifyAuth(req, res, next) {
     console.log('validando path: ', req.path);
     if (req.path === "/sign-up" || req.path === '/get-all-products') {
@@ -28,9 +27,8 @@ async function verifyAuth(req, res, next) {
     try {
         const decodedToken = await admin.auth().verifyIdToken(token);
         req.uid = decodedToken.uid;
-        const uid = decodedToken.uid;
         logger.info("Token valido.");
-        return next();
+        next();
     } catch (error) {
         logger.error("Error de autenticación:", error);
         return res

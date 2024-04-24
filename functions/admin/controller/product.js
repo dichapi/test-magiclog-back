@@ -72,15 +72,17 @@ getAllProducts = async (req, res) => {
   logger.info("controlador obtener productos de clientes");
   try {
     const data = await productService.getAllProducts();
+    console.log('products data:', data);
     if (data != null && data.docs.length > 0) {
       const productos = [];
-      data.forEach((doc) => {
+      data.docs.forEach((doc) => {
         productos.push({
           sku: doc.id,
           name: doc.data().name,
           price: doc.data().price,
         });
       });
+      console.log('productos response: ', productos);
       return res.status(200).send(generateResponse(true, productos));
     } else {
       return res.status(200).json(generateResponse(true, []));
@@ -102,7 +104,7 @@ getSellerProducts = async (req, res) => {
     const data = await productService.getSellerProducts(uid);
     if (data != null && data.docs.length > 0) {
       const productos = [];
-      data.forEach((doc) => {
+      data.docs.forEach((doc) => {
         productos.push({ code: doc.id, ...doc.data() });
       });
       return res.status(200).send(generateResponse(true, productos));

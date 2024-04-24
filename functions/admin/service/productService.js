@@ -39,6 +39,7 @@ async function getProducts() {
   try {
     const productRef = await db.collection("products").get();
     const products = [];
+    console.log('product ref: ', productRef);
     if (productRef != null && productRef.docs.length > 0) {
       for (const doc of productRef.docs) {
         const productData = {
@@ -47,7 +48,7 @@ async function getProducts() {
           price: doc.data().price,
           count: doc.data().count,
         };
-        
+        console.log('obteniendo nombre del usuario: ', doc.data().uid);
         const userDoc = await db.collection("users").doc(doc.data().uid).get();
         productData['user'] = userDoc.data().name;
 
@@ -55,11 +56,10 @@ async function getProducts() {
       }
     }
 
-    // Retorna los resultados de la consulta
     return products;
   } catch (error) {
     logger.error("Error al obtener productos:", error);
-    return null;
+    return [];
   }
 }
 
@@ -68,18 +68,16 @@ async function getAllProducts() {
     const prodRef = db.collection("products")
         .where("status", "in", ["Activo"]);
 
-    // Obtener todos los documentos de la subcolección de productos
     const productsSnapshot = await prodRef.get();
 
     if (productsSnapshot.empty) {
       logger.error("No se encontraron registros de productos.");
-      return null;
+      return {docs: []};
     }
-    // Retorna los resultados de la consulta
     return productsSnapshot;
   } catch (error) {
     logger.error("Error al obtener productos:", error);
-    return null;
+    throw new Error("Error: ", error);
   }
 }
 
